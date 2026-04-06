@@ -5,130 +5,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JHEN DA BIOTECH | 禎達行銷顧問</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: #0a192f; color: #e2e8f0; }
-        .hermes-orange { color: #FF7700; }
-        .bg-hermes-orange { background-color: #FF7700; }
-        .border-hermes-orange { border-color: #FF7700; }
-        .navy-bg { background-color: #0a192f; }
-        .glass-nav { background: rgba(10, 25, 47, 0.85); backdrop-filter: blur(10px); }
-        .hero-section { background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8)), url('https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80') center/cover; }
+        :root { --hermes-orange: #FF7700; --target-blue: #356994; }
+        body { font-family: 'Noto Sans TC', sans-serif; scroll-behavior: smooth; margin: 0; }
+
+        /* 導覽列 */
+        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); position: fixed; width: 100%; z-index: 100; border-bottom: 1px solid rgba(53,105,148,0.2); }
+        
+        /* 1. 封面背景：DNA 結構圖 */
+        .hero-bg { 
+            background: linear-gradient(rgba(53, 105, 148, 0.85), rgba(15, 23, 42, 0.9)), 
+                        url('https://images.unsplash.com/photo-1530213786676-41ad9f7736f6?auto=format&fit=crop&q=80') center/cover; 
+            height: 100vh; display: flex; align-items: center; justify-content: center; color: white; text-align: center; 
+        }
+
+        /* 2. 視差背景：細胞再生主題影像 */
+        .parallax-dna { 
+            background-image: url('https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80'); 
+            height: 480px; 
+            background-attachment: fixed; 
+            background-position: center; 
+            background-size: cover; 
+            position: relative;
+        }
+
+        /* 組織架構核心修改 - 嚴格保留成功對齊版 */
+        .org-chart { display: flex; flex-direction: column; align-items: center; padding: 60px 0; }
+        .box { border: 2px solid var(--target-blue); padding: 12px 20px; background: white; min-width: 160px; text-align: center; border-radius: 4px; position: relative; }
+        .line-v { width: 2px; height: 40px; background: var(--target-blue); }
+
+        /* 總經理整排往右移動，使 Peter 中心對準 Nancy */
+        .manager-container { 
+            display: flex; 
+            align-items: center; 
+            position: relative;
+            transform: translateX(110px); 
+        }
+        .line-h-fred { width: 60px; height: 2px; background: var(--target-blue); }
+
+        .dept-branch-main { width: 2px; height: 40px; background: var(--target-blue); }
+        .dept-branch-h { width: 80%; height: 2px; background: var(--target-blue); display: flex; justify-content: space-between; }
+        .dept-stub { width: 2px; height: 25px; background: var(--target-blue); }
+        .dept-row { display: flex; justify-content: space-between; width: 85%; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <nav class="fixed w-full z-50 glass-nav border-b border-gray-700">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <nav class="glass-nav h-20 flex items-center px-6">
+        <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 bg-hermes-orange rounded-full flex items-center justify-center text-black font-bold text-xl">JD</div>
-                <div class="flex flex-col">
-                    <span class="text-xl font-bold tracking-tight text-white leading-none">JHEN DA <span class="hermes-orange">BIOTECH</span></span>
-                    <span class="text-xs text-gray-400 mt-1">禎達行銷顧問有限公司</span>
-                </div>
+                <div class="w-10 h-10 bg-[#FF7700] rounded-full flex items-center justify-center text-white font-bold">JD</div>
+                <div class="font-bold text-xl" style="color: var(--target-blue);">JHEN DA <span style="color: var(--hermes-orange);">BIOTECH</span></div>
             </div>
-            <div class="flex items-center space-x-8">
-                <div class="hidden md:flex space-x-8 text-sm font-medium">
-                    <a href="#about" data-zh="關於我們" data-en="About Us" class="lang-text hover:hermes-orange transition">關於我們</a>
-                    <a href="#products" data-zh="產品介紹" data-en="Products" class="lang-text hover:hermes-orange transition">產品介紹</a>
-                    <a href="#team" data-zh="核心團隊" data-en="Our Team" class="lang-text hover:hermes-orange transition">核心團隊</a>
-                </div>
-                <button onclick="toggleLanguage()" class="border border-hermes-orange hermes-orange px-4 py-1 rounded text-xs font-bold hover:bg-hermes-orange hover:text-white transition">
-                    EN / 中文
-                </button>
+            <div class="flex items-center space-x-8 font-bold" style="color: var(--target-blue);">
+                <a href="#about" data-zh="關於我們" data-en="About Us">關於我們</a>
+                <a href="#products" data-zh="產品介紹" data-en="Products">產品介紹</a>
+                <a href="#team" data-zh="核心團隊" data-en="Team">核心團隊</a>
+                <button onclick="toggleLang()" class="border border-orange-500 text-[#FF7700] px-3 py-1 rounded text-xs hover:bg-[#FF7700] hover:text-white transition">EN / 中文</button>
             </div>
         </div>
     </nav>
 
-    <header class="h-screen flex items-center hero-section px-6">
-        <div class="max-w-4xl mx-auto text-left">
-            <h2 class="hermes-orange font-bold tracking-widest mb-4 uppercase text-sm" data-zh="專業醫療行銷協助" data-en="Professional Medical Marketing">專業醫療行銷協助</h2>
-            <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-tight text-white">
-                <span data-zh="開發、代理、經銷" data-en="Development & Distribution">開發、代理、經銷</span><br>
-                <span class="hermes-orange" data-zh="最新醫療器材與產品" data-en="Innovative Medical Products">最新醫療器材與產品</span>
-            </h1>
-            <p class="text-xl text-gray-300 mb-10 max-w-2xl font-light" data-zh="深入診所與醫院等醫療院所通路，為臨床需求提供最先進的解決方案。" data-en="Reaching clinics and hospitals nationwide, providing the most advanced solutions for clinical needs.">
-                深入診所與醫院等醫療院所通路，為臨床需求提供最先進的解決方案。
-            </p>
-            <a href="#about" class="bg-hermes-orange text-white px-10 py-4 rounded-full font-bold shadow-lg hover:opacity-90 transition inline-block" data-zh="了解公司理念" data-en="Our Mission">了解公司理念</a>
-        </div>
+    <header class="hero-bg">
+        <h1 class="text-5xl md:text-7xl font-bold">
+            <span data-zh="開發、代理、經銷" data-en="Develop, Represent, Distribute">開發、代理、經銷</span><br>
+            <span style="color: var(--hermes-orange); font-weight: 800;" data-zh="最新醫療科技與產品" data-en="Latest Medical Tech & Products">最新醫療科技與產品</span>
+        </h1>
     </header>
 
-    <section id="about" class="py-32 bg-white text-slate-900">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h3 class="text-hermes-orange font-bold mb-4 uppercase tracking-widest" data-zh="關於禎達" data-en="About Jhen Da">關於禎達</h3>
-            <h2 class="text-4xl font-bold mb-12 text-slate-900" data-zh="以病患醫療需求為優先" data-en="Patient Needs First">以病患醫療需求為優先</h2>
-            <p class="text-xl leading-relaxed text-gray-600 space-y-6">
-                <span data-zh="我們是以臨床病人醫療需求為優先，作為產品開發基準且以協助臨床醫師治療病人為優先目標。" data-en="We prioritize clinical patient needs as our development benchmark and focus on assisting physicians in achieving optimal treatment outcomes.">
-                    我們是以臨床病人醫療需求為優先，作為產品開發基準且以協助臨床醫師治療病人為優先目標。
-                </span><br><br>
-                <span data-zh="希望透過引進先進醫療產品，減少病患治療期間的病痛，進而增進病患的生活品質。" data-en="Through the introduction of advanced medical products, we aim to alleviate suffering during treatment and enhance the overall quality of life for patients.">
-                    希望透過引進先進醫療產品，減少病患治療期間的病痛，進而增進病患的生活品質。
-                </span>
-            </p>
+    <section id="about" class="py-24" style="background-color: var(--target-blue); color: white; text-align: center;">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-8 text-white" data-zh="關於我們" data-en="About Us">關於我們</h2>
+            <p class="text-xl font-light leading-relaxed" data-zh="我們是以臨床病人醫療需求為優先，作為產品開發基準且以協助臨床醫師治療病人為優先目標。希望透過先進醫療產品，減少病患治療期間的病痛，增進病患生活品質。" data-en="We prioritize clinical medical needs. Through advanced medical products, we seek to reduce patient pain and improve quality of life.">我們是以臨床病人醫療需求為優先，作為產品開發基準且以協助臨床醫師治療病人為優先目標。希望透過先進醫療產品，減少病患治療期間的病痛，增進病患生活品質。</p>
         </div>
     </section>
 
-    <section id="products" class="py-32 navy-bg">
-        <div class="max-w-7xl mx-auto px-6">
-            <h3 class="text-hermes-orange font-bold text-center mb-16 uppercase tracking-widest" data-zh="核心產品" data-en="Core Products">核心產品</h3>
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="bg-gray-800/50 rounded-3xl p-10 border border-gray-700 hover:border-hermes-orange transition">
-                    <div class="h-1 w-20 bg-hermes-orange mb-8"></div>
-                    <h4 class="text-3xl font-bold mb-4 text-white uppercase">CID CRE8 EVO</h4>
-                    <p class="hermes-orange mb-6 font-mono">Drug Eluting Stent System</p>
-                    <ul class="text-gray-400 space-y-4 mb-8 text-sm leading-relaxed">
-                        <li data-zh="• BIS 碳塗層技術：加速內皮化並減少血栓形成。" data-en="• BIS Coating: Accelerates endothelialization and reduces thrombogenicity.">• BIS 碳塗層技術：加速內皮化並減少血栓形成。</li>
-                        <li data-zh="• 專為糖尿病患設計：凹槽填藥設計提供更穩定的釋藥。" data-en="• Diabetic Friendly: Specially engineered for superior clinical outcomes in diabetic patients.">• 專為糖尿病患設計：凹槽填藥設計提供更穩定的釋藥。</li>
-                        <li data-zh="• 鉑金定位標記：提供手術中卓越的影像顯影。" data-en="• Platinum Markers: Ensuring high X-ray visibility during intervention.">• 鉑金定位標記：提供手術中卓越的影像顯影。</li>
-                    </ul>
-                </div>
+    <div class="parallax-dna"></div>
 
-                <div class="bg-gray-800/50 rounded-3xl p-10 border border-gray-700 border-dashed flex flex-center items-center justify-center">
-                    <div class="text-center">
-                        <p class="text-gray-500 italic" data-zh="骨材產品內容更新中..." data-en="Orthopedic product info coming soon...">骨材產品內容更新中...</p>
-                    </div>
-                </div>
+    <section id="products" class="py-24 max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-16" style="color: var(--target-blue);" data-zh="核心產品介紹" data-en="Core Products">核心產品介紹</h2>
+        <div class="grid md:grid-cols-2 gap-12 text-center">
+            <div class="shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white">
+                <img src="8.jpg" class="w-full h-80 object-cover">
+                <p class="p-4 font-bold text-slate-700">CID CRE8 EVO</p>
+            </div>
+            <div class="shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white">
+                <img src="骨頭.jpg" class="w-full h-80 object-cover">
+                <p class="p-4 font-bold text-slate-700">FlexiOss®</p>
             </div>
         </div>
     </section>
 
-    <section id="team" class="py-32 bg-gray-50 text-slate-900">
-        <div class="max-w-7xl mx-auto px-6">
-            <h3 class="text-hermes-orange font-bold text-center mb-16 uppercase tracking-widest" data-zh="核心團隊" data-en="Our Leadership">核心團隊</h3>
-            <div class="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
-                <div class="text-center">
-                    <div class="w-32 h-32 bg-slate-200 rounded-full mx-auto mb-6 flex items-center justify-center text-slate-400 text-3xl"><i class="fas fa-user-tie"></i></div>
-                    <h4 class="text-2xl font-bold" data-zh="謝鵬禎" data-en="Xie Peng-Zhen">謝鵬禎</h4>
-                    <p class="text-hermes-orange font-medium mb-4" data-zh="董事長" data-en="Chairman">董事長</p>
-                    <p class="text-gray-500 text-sm">111223@gmail.com</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-32 h-32 bg-slate-200 rounded-full mx-auto mb-6 flex items-center justify-center text-slate-400 text-3xl"><i class="fas fa-user-tie"></i></div>
-                    <h4 class="text-2xl font-bold" data-zh="李偵腕" data-en="Li Zhen-Wan">李偵腕</h4>
-                    <p class="text-hermes-orange font-medium mb-4" data-zh="總經理" data-en="General Manager">總經理</p>
-                    <p class="text-gray-500 text-sm">12345@gmail.com</p>
-                </div>
+    <section id="team" class="py-24 bg-gray-50">
+        <h2 class="text-3xl font-bold text-center mb-12" style="color: var(--target-blue);" data-zh="核心團隊與組織架構" data-en="Leadership & Organization">核心團隊與組織架構</h2>
+        <div class="org-chart">
+            <div class="box" style="border-color: var(--hermes-orange);"><div class="font-bold">Nancy</div><div style="color: var(--hermes-orange); font-weight: bold;" data-zh="董事長" data-en="Chairman">董事長</div></div>
+            <div class="line-v"></div>
+            
+            <div class="manager-container">
+                <div class="box shadow-md"><div class="font-bold">Peter</div><div style="color: var(--hermes-orange); font-weight: bold;" data-zh="總經理" data-en="General Manager">總經理</div></div>
+                <div class="line-h-fred"></div>
+                <div class="box"><div class="font-bold text-slate-600">Fred</div><div class="text-xs" style="color: var(--hermes-orange); font-weight: bold;" data-zh="企業暨事業發展顧問" data-en="Business Advisor">企業暨事業發展顧問</div></div>
+            </div>
+            
+            <div class="dept-branch-main"></div>
+            <div class="dept-branch-h"><div class="dept-stub"></div><div class="dept-stub"></div><div class="dept-stub"></div></div>
+            <div class="dept-row">
+                <div class="box font-bold text-sm" data-zh="業務部" data-en="Sales Dept.">業務部</div>
+                <div class="box font-bold text-sm" data-zh="行政部" data-en="Admin Dept.">行政部</div>
+                <div class="box font-bold text-sm" data-zh="行銷部" data-en="Marketing Dept.">行銷部</div>
             </div>
         </div>
     </section>
 
-    <footer class="py-12 border-t border-gray-800 text-center text-gray-500 text-xs">
-        <p>© 2026 JHEN DA BIOTECH CO.,LTD. 禎達行銷顧問有限公司</p>
+    <footer class="py-12" style="background-color: var(--target-blue); color: white; text-align: center;">
+        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mx-auto mb-4" style="color: var(--target-blue); font-weight: bold;">JD</div>
+        <p>© 2026 JHEN DA BIOTECH CO.,LTD. <span data-zh="禎達行銷顧問有限公司" data-en="Jhen Da Biotech">禎達行銷顧問有限公司</span></p>
     </footer>
 
     <script>
-        let currentLang = 'zh';
-        function toggleLanguage() {
-            currentLang = currentLang === 'zh' ? 'en' : 'zh';
-            const elements = document.querySelectorAll('[data-zh]');
-            elements.forEach(el => {
-                el.innerText = el.getAttribute(`data-${currentLang}`);
-            });
-            const navLinks = document.querySelectorAll('.lang-text');
-            navLinks.forEach(el => {
-                el.innerText = el.getAttribute(`data-${currentLang}`);
+        let isZh = true;
+        function toggleLang() {
+            isZh = !isZh;
+            document.querySelectorAll('[data-zh]').forEach(el => {
+                el.innerText = isZh ? el.getAttribute('data-zh') : el.getAttribute('data-en');
             });
         }
     </script>
