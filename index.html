@@ -48,6 +48,18 @@
         .dept-branch-h { width: 80%; height: 2px; background: var(--target-blue); display: flex; justify-content: space-between; }
         .dept-stub { width: 2px; height: 25px; background: var(--target-blue); }
         .dept-row { display: flex; justify-content: space-between; width: 85%; margin-top: 10px; }
+   /* 滾動動畫基礎樣式 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        /* 當元素進入視線時的狀態 */
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -83,7 +95,7 @@
         </h1>
     </header>
 
-  <section id="about" class="py-24" style="background-color: var(--target-blue); color: white;">
+  <section id="about" class="py-24 reveal" style="background-color: var(--target-blue); color: white;">
         <div class="max-w-5xl mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold mb-6 text-white" data-zh="關於我們" data-en="About Us">關於我們</h2>
@@ -123,7 +135,7 @@
     </section>
 
     <div class="parallax-dna"></div>
-    <section id="services" class="py-24 bg-white">
+    <section id="services" class="py-24 bg-white reveal">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-3xl font-bold text-center mb-16" style="color: var(--target-blue);" data-zh="服務項目" data-en="Our Services">服務項目</h2>
             <div class="grid md:grid-cols-3 gap-10">
@@ -146,7 +158,7 @@
         </div>
     </section>
 
-    <section id="products" class="py-24 max-w-7xl mx-auto px-6">
+    <section id="products" class="py-24 max-w-7xl mx-auto reveal px-6">
         <h2 class="text-3xl font-bold text-center mb-16" style="color: var(--target-blue);" data-zh="核心產品介紹" data-en="Core Products">核心產品介紹</h2>
         <div class="grid md:grid-cols-2 gap-12 text-center">
             <div class="shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white">
@@ -212,6 +224,21 @@
                 behavior: 'smooth' // 平滑捲動
             });
         }
-    </script>
+   // 滾動偵測動畫邏輯
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150; // 距離視窗底部多少距離時啟動
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // 網頁載入時先執行一次，避免首屏內容消失
+        reveal();
+   </script>
 </body>
 </html>
