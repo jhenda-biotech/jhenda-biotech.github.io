@@ -179,13 +179,36 @@
         <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mx-auto mb-4" style="color: var(--target-blue); font-weight: bold;">JD</div>
         <p>© 2026 JHEN DA BIOTECH CO.,LTD. <span data-zh="禎達行銷顧問有限公司" data-en="Jhen Da Biotech">禎達行銷顧問有限公司</span></p>
     </footer>
-
-    <script>
+<button id="topBtn" onclick="scrollToTop()" class="fixed bottom-8 right-8 z-50 bg-[#FF7700] text-white w-12 h-12 rounded-full shadow-2xl flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-orange-600 hover:scale-110">
+        <span class="text-xl font-bold">↑</span>
+    </button>
+   <script>
+        // 1. 切換語言邏輯
         let isZh = true;
         function toggleLang() {
             isZh = !isZh;
             document.querySelectorAll('[data-zh]').forEach(el => {
                 el.innerText = isZh ? el.getAttribute('data-zh') : el.getAttribute('data-en');
+            });
+        }
+
+        // 2. 監聽捲動事件，顯示或隱藏 TOP 按鈕
+        const topBtn = document.getElementById("topBtn");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                topBtn.classList.remove("opacity-0", "invisible");
+                topBtn.classList.add("opacity-100", "visible");
+            } else {
+                topBtn.classList.remove("opacity-100", "visible");
+                topBtn.classList.add("opacity-0", "invisible");
+            }
+        };
+
+        // 3. 執行回到頂端
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // 平滑捲動
             });
         }
     </script>
