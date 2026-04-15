@@ -93,6 +93,46 @@
             opacity: 1;
             transform: translateY(0);
         }
+       /* 科技感數字框核心樣式 */
+        .tech-counter-card {
+            position: relative;
+            background: rgba(0, 10, 20, 0.6); /* 更深的底色 */
+            border: 1px solid rgba(0, 255, 255, 0.2); /* 淡淡的藍色邊框 */
+            overflow: hidden;
+            transition: all 0.3s ease;
+            /* 霓虹燈藍色光暈 */
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+        }
+
+        /* 增加細微的背景網格紋理 */
+        .tech-counter-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 10px 10px;
+            opacity: 0.5;
+        }
+
+        /* 右下角切角設計 (增加科技不規則感) */
+        .tech-counter-card {
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+        }
+
+        /* 滑鼠移上去時的霓虹燈發光效果 (藍色轉橘色) */
+        .tech-counter-card:hover {
+            border-color: rgba(255, 119, 0, 0.8); /* 邊框變橘色 */
+            box-shadow: 0 0 25px rgba(255, 119, 0, 0.4); /* 橘色光暈 */
+            transform: translateY(-5px); /* 微幅上浮 */
+        }
+
+        /* 數字本身的橘色霓虹燈質感 */
+        .tech-number {
+            color: #FF7700;
+            text-shadow: 0 0 10px rgba(255, 119, 0, 0.7),
+                         0 0 20px rgba(255, 119, 0, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -165,22 +205,30 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="bg-black/30 p-6 rounded-2xl border border-white/10 backdrop-blur-sm">
-                <div class="text-4xl font-bold text-orange-400 mb-2"><span id="count1">0</span></div>
-                <div class="text-[10px] uppercase tracking-widest text-gray-300" data-zh="醫學中心" data-en="Medical Centers">醫學中心</div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            
+            <div class="tech-counter-card p-6 text-center group">
+                <div class="text-5xl font-bold tech-number mb-2"><span id="count1">0</span></div>
+                <div class="text-[10px] uppercase tracking-[0.2em] text-cyan-200 font-medium" data-zh="醫學中心" data-en="Medical Centers">醫學中心</div>
+                <div class="absolute top-2 right-2 w-1 h-1 bg-cyan-400 rounded-full opacity-50"></div>
             </div>
-            <div class="bg-black/30 p-6 rounded-2xl border border-white/10 backdrop-blur-sm">
-                <div class="text-4xl font-bold text-orange-400 mb-2"><span id="count2">0</span></div>
-                <div class="text-[10px] uppercase tracking-widest text-gray-300" data-zh="區域醫院" data-en="Regional Hospitals">區域醫院</div>
+
+            <div class="tech-counter-card p-6 text-center group">
+                <div class="text-5xl font-bold tech-number mb-2"><span id="count2">0</span></div>
+                <div class="text-[10px] uppercase tracking-[0.2em] text-cyan-200 font-medium" data-zh="區域醫院" data-en="Regional Hospitals">區域醫院</div>
+                <div class="absolute top-2 right-2 w-1 h-1 bg-cyan-400 rounded-full opacity-50"></div>
             </div>
-            <div class="bg-black/30 p-6 rounded-2xl border border-white/10 backdrop-blur-sm">
-                <div class="text-4xl font-bold text-orange-400 mb-2"><span id="count3">0</span></div>
-                <div class="text-[10px] uppercase tracking-widest text-gray-300" data-zh="地區醫院" data-en="Local Hospitals">地區醫院</div>
+
+            <div class="tech-counter-card p-6 text-center group">
+                <div class="text-5xl font-bold tech-number mb-2"><span id="count3">0</span></div>
+                <div class="text-[10px] uppercase tracking-[0.2em] text-cyan-200 font-medium" data-zh="地區醫院" data-en="Local Hospitals">地區醫院</div>
+                <div class="absolute top-2 right-2 w-1 h-1 bg-cyan-400 rounded-full opacity-50"></div>
             </div>
-            <div class="bg-black/30 p-6 rounded-2xl border border-white/10 backdrop-blur-sm">
-                <div class="text-4xl font-bold text-orange-400 mb-2"><span id="count4">0</span><span class="text-2xl">+</span></div>
-                <div class="text-[10px] uppercase tracking-widest text-gray-300" data-zh="合作診所" data-en="Partner Clinics">合作診所</div>
+
+            <div class="tech-counter-card p-6 text-center group">
+                <div class="text-5xl font-bold tech-number mb-2"><span id="count4">0</span><span class="text-3xl">+</span></div>
+                <div class="text-[10px] uppercase tracking-[0.2em] text-cyan-200 font-medium" data-zh="合作診所" data-en="Partner Clinics">合作診所</div>
+                <div class="absolute top-2 right-2 w-1 h-1 bg-cyan-400 rounded-full opacity-50"></div>
             </div>
         </div>
     </div>
