@@ -12,15 +12,21 @@
 
        /* 強化版懸浮導覽列 */
         .glass-nav { 
-            background: rgba(255, 255, 255, 0); /* 初始完全透明 */
-            backdrop-filter: blur(0px);
-            position: fixed; 
-            width: 100%; 
-            z-index: 100; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* 增加平滑感 */
-            border-bottom: 1px solid rgba(255, 255, 255, 0);
-        }
-
+    /* 修改這裡：0.15 代表 15% 的白色背景 */
+    background: rgba(255, 255, 255, 0.15); 
+    /* 初始也加一點點模糊，質感會更猛 */
+    backdrop-filter: blur(4px); 
+    position: fixed; 
+    width: 100%; 
+    z-index: 100; 
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.glass-nav a {
+    color: var(--target-blue) !important; /* 確保字體顏色夠深 */
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5); /* 幫字加一點白光底，更好讀 */
+}
+        
         /* 捲動後的狀態 */
         .glass-nav.scrolled {
             background: rgba(255, 255, 255, 0.85); /* 變回半透明白 */
