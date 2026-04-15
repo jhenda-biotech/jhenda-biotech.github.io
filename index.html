@@ -10,8 +10,30 @@
         :root { --hermes-orange: #FF7700; --target-blue: #356994; }
         body { font-family: 'Noto Sans TC', sans-serif; scroll-behavior: smooth; margin: 0; }
 
-        /* 導覽列 */
-        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); position: fixed; width: 100%; z-index: 100; border-bottom: 1px solid rgba(53,105,148,0.2); }
+       /* 強化版懸浮導覽列 */
+        .glass-nav { 
+            background: rgba(255, 255, 255, 0); /* 初始完全透明 */
+            backdrop-filter: blur(0px);
+            position: fixed; 
+            width: 100%; 
+            z-index: 100; 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* 增加平滑感 */
+            border-bottom: 1px solid rgba(255, 255, 255, 0);
+        }
+
+        /* 捲動後的狀態 */
+        .glass-nav.scrolled {
+            background: rgba(255, 255, 255, 0.85); /* 變回半透明白 */
+            backdrop-filter: blur(12px); /* 毛玻璃效果 */
+            height: 64px !important; /* 變窄 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(53, 105, 148, 0.1);
+        }
+
+        /* 讓選單文字在透明背景時也好看 */
+        .glass-nav a {
+            transition: color 0.3s;
+        }
         
         /* 1. 封面背景：DNA 結構圖 */
        .hero-bg { 
@@ -207,7 +229,18 @@
 
         // 2. 監聽捲動事件，顯示或隱藏 TOP 按鈕
         const topBtn = document.getElementById("topBtn");
+// 監聽捲動事件 (合併導覽列與 TOP 按鈕邏輯)
         window.onscroll = function() {
+            // 1. 導覽列縮放與毛玻璃特效
+            const nav = document.querySelector(".glass-nav");
+            if (window.scrollY > 50) {
+                nav.classList.add("scrolled");
+            } else {
+                nav.classList.remove("scrolled");
+            }
+
+            // 2. 監聽捲動距離，顯示或隱藏 TOP 按鈕
+            const topBtn = document.getElementById("topBtn");
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
                 topBtn.classList.remove("opacity-0", "invisible");
                 topBtn.classList.add("opacity-100", "visible");
@@ -215,9 +248,12 @@
                 topBtn.classList.remove("opacity-100", "visible");
                 topBtn.classList.add("opacity-0", "invisible");
             }
+            
+            // 3. 觸發滾動出現動畫 (剛才教的 reveal)
+            reveal();
         };
 
-        // 3. 執行回到頂端
+        // 4. 執行回到頂端
         function scrollToTop() {
             window.scrollTo({
                 top: 0,
