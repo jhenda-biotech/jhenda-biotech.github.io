@@ -8,7 +8,14 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap');
         :root { --hermes-orange: #FF7700; --target-blue: #356994; }
-        body { font-family: 'Noto Sans TC', sans-serif; scroll-behavior: smooth; margin: 0; }
+        body {
+            /* 優先使用微軟正黑體搭配襯線備援，能確保在所有螢幕上都清晰且有質感 */
+            font-family: "Georgia", "Times New Roman", "Noto Serif TC", "Songti TC", "微軟正黑體", serif;
+            background-color: var(--target-blue);
+            color: white;
+            line-height: 1.7; /* 襯線體稍微增加行距會更好看 */
+            overflow-x: hidden;
+        } }
 
        /* 強化版懸浮導覽列 */
         .glass-nav { 
