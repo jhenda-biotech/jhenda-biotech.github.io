@@ -140,6 +140,42 @@
             text-shadow: 0 0 10px rgba(255, 119, 0, 0.7),
                          0 0 20px rgba(255, 119, 0, 0.5);
         }
+  /* 產品卡片容器：必須設定 overflow: hidden 才能剪掉飛出去的光 */
+        .product-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        /* 製作那道「光」 */
+        .product-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%; /* 初始位置在卡片左邊外面 */
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                to right, 
+                rgba(255, 255, 255, 0) 0%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: skewX(-25deg); /* 斜角光影 */
+            transition: none;
+        }
+
+        /* 滑鼠移上去時，光影掃過 */
+        .product-card:hover::after {
+            left: 150%; /* 掃到右邊外面 */
+            transition: all 0.7s ease; /* 掃動的速度 */
+        }
+
+        /* 懸浮時卡片微幅放大並發光 */
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -271,11 +307,11 @@
     <section id="products" class="py-24 max-w-7xl mx-auto reveal px-6">
         <h2 class="text-3xl font-bold text-center mb-16" style="color: var(--target-blue);" data-zh="核心產品介紹" data-en="Core Products">核心產品介紹</h2>
         <div class="grid md:grid-cols-2 gap-12 text-center">
-            <div class="shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white">
+            <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white">
                 <img src="8.jpg" class="w-full h-auto max-h-[500px] object-contain mx-auto">
                 <p class="p-4 font-bold text-slate-700">CID CRE8 EVO</p>
             </div>
-            <div class="shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white">
+            <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white">
                 <img src="bone.jpg" class="w-full h-auto max-h-[500px] object-contain mx-auto">
                 <p class="p-4 font-bold text-slate-700">FlexiOss®</p>
             </div>
