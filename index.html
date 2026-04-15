@@ -13,7 +13,7 @@
        /* 強化版懸浮導覽列 */
         .glass-nav { 
     /* 修改這裡：0.15 代表 15% 的白色背景 */
-    background: rgba(255, 255, 255, 0.15); 
+    background: rgba(255, 255, 255, 0.3); 
     /* 初始也加一點點模糊，質感會更猛 */
     backdrop-filter: blur(4px); 
     position: fixed; 
@@ -23,13 +23,14 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 .glass-nav a {
-    color: var(--target-blue) !important; /* 確保字體顏色夠深 */
-    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5); /* 幫字加一點白光底，更好讀 */
-}
-        /* 讓導覽列所有連結滑鼠移入時都變橘色 */
+            color: var(--target-blue); 
+            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
         .glass-nav a:hover {
-            color: #FF7700 !important; /* 使用你的代表橘色 */
-            transform: translateY(-2px); /* 輕微上浮感，看起來更精緻 */
+            color: #FF7700 !important; 
+            transform: translateY(-2px);
         }
         
         /* 捲動後的狀態 */
