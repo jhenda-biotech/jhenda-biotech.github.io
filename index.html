@@ -17,17 +17,42 @@
             overflow-x: hidden;
         } }
 
-       /* 強化版懸浮導覽列 */
-       ..glass-nav {
+     /* 1. 導覽列本體：強制置頂 + 科技透明質感 */
+.glass-nav {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
+    height: 80px !important; /* 對應妳 HTML 的 h-20 */
     z-index: 9999 !important;
-    background-color: rgba(255, 255, 255, 0.7) !important;
+    
+    /* 背景：微透明白色 */
+    background: rgba(255, 255, 255, 0.6) !important;
+    
+    /* 核心科技感：毛玻璃特效 */
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
+    
+    /* 底部細線，讓層次感出來 */
     border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    
+    /* 確保裡面的東西垂直居中 */
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* 2. 選單文字：維持藍色、加平滑動畫 */
+.glass-nav a {
+    color: var(--target-blue) !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+    display: inline-block;
+}
+
+/* 3. 鼠標移上去：變橘色 + 向上跳動 (科技感動態) */
+.glass-nav a:hover {
+    color: #FF7700 !important;
+    transform: translateY(-3px) !important;
 }
 .glass-nav a {
             color: var(--target-blue); 
