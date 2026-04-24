@@ -8,249 +8,78 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap');
         :root { --hermes-orange: #FF7700; --target-blue: #356994; }
+        
         body {
-            /* 優先使用微軟正黑體搭配襯線備援，能確保在所有螢幕上都清晰且有質感 */
             font-family: "Georgia", "Times New Roman", "Noto Serif TC", "Songti TC", "微軟正黑體", serif;
-           background-color: #ffffff; /* 讓全站底色恢復白色 */
-    color: #333333; /* 讓全站文字預設為深色 */
-            line-height: 1.7; /* 襯線體稍微增加行距會更好看 */
+            background-color: #ffffff;
+            color: #333333;
+            line-height: 1.7;
             overflow-x: hidden;
-        } }
+        }
 
-       /* 強化版懸浮導覽列 */
-        .glass-nav { 
-    background: rgba(255, 255, 255, 0.5); 
-    /* 初始也加一點點模糊，質感會更猛 */
-    backdrop-filter: blur(4px); 
-    position: fixed; 
-    width: 100%; 
-    z-index: 100; 
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-.glass-nav a {
-            color: var(--target-blue); 
-            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+        /* 導覽列核心樣式 - 圖一一排版 + 圖二二質感 */
+        nav {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+            background-color: rgba(255, 255, 255, 0.7) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             transition: all 0.3s ease;
         }
 
-        .glass-nav a:hover {
-            color: #FF7700 !important; 
-            transform: translateY(-2px);
+        /* 選單文字：藍色 + 跳動感 */
+        .nav-link {
+            color: #356994 !important;
+            font-weight: 500;
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-decoration: none;
         }
-        
-        /* 捲動後的狀態 */
-        .glass-nav.scrolled {
-            background: rgba(255, 255, 255, 0.85); /* 變回半透明白 */
-            backdrop-filter: blur(12px); /* 毛玻璃效果 */
-            height: 64px !important; /* 變窄 */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(53, 105, 148, 0.1);
+        .nav-link:hover {
+            color: #FF7700 !important;
+            transform: translateY(-4px);
         }
 
-        /* 讓選單文字在透明背景時也好看 */
-        .glass-nav a {
-            transition: color 0.3s;
-        }
-        
-        /* 1. 封面背景：DNA 結構圖 */
-       .hero-bg { 
+        /* 其他原本的樣式保留 */
+        .hero-bg { 
             background: linear-gradient(rgba(53, 105, 148, 0.8), rgba(15, 23, 42, 0.85)), 
                         url('https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&q=80') center/cover; 
             height: 100vh; display: flex; align-items: center; justify-content: center; color: white; text-align: center; 
         }
-
-        /* 2. 視差背景：細胞再生主題影像 */
-        .parallax-dna { 
-            background-image: url('https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80'); 
-            height: 480px; 
-            background-attachment: fixed; 
-            background-position: center; 
-            background-size: cover; 
-            position: relative;
-        }
-
-        /* 組織架構核心修改 - 嚴格保留成功對齊版 */
-        .org-chart { display: flex; flex-direction: column; align-items: center; padding: 60px 0; }
-        .box { border: 2px solid var(--target-blue); padding: 12px 20px; background: white; min-width: 160px; text-align: center; border-radius: 4px; position: relative; }
-        .line-v { width: 2px; height: 40px; background: var(--target-blue); }
-
-        /* 總經理整排往右移動，使 Peter 中心對準 Nancy */
-        .manager-container { 
-            display: flex; 
-            align-items: center; 
-            position: relative;
-            transform: translateX(110px); 
-        }
-        .line-h-fred { width: 60px; height: 2px; background: var(--target-blue); }
-
-        .dept-branch-main { width: 2px; height: 40px; background: var(--target-blue); }
-        .dept-branch-h { width: 80%; height: 2px; background: var(--target-blue); display: flex; justify-content: space-between; }
-        .dept-stub { width: 2px; height: 25px; background: var(--target-blue); }
-        .dept-row { display: flex; justify-content: space-between; width: 85%; margin-top: 10px; }
-   /* 滾動動畫基礎樣式 */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-
-        /* 當元素進入視線時的狀態 */
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-       /* 科技感數字框核心樣式 */
-        .tech-counter-card {
-            position: relative;
-            background: rgba(0, 10, 20, 0.6); /* 更深的底色 */
-            border: 1px solid rgba(0, 255, 255, 0.2); /* 淡淡的藍色邊框 */
-            overflow: hidden;
-            transition: all 0.3s ease;
-            /* 霓虹燈藍色光暈 */
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
-        }
-
-        /* 增加細微的背景網格紋理 */
-        .tech-counter-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 10px 10px;
-            opacity: 0.5;
-        }
-
-        /* 右下角切角設計 (增加科技不規則感) */
-        .tech-counter-card {
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
-        }
-
-        /* 滑鼠移上去時的霓虹燈發光效果 (藍色轉橘色) */
-        .tech-counter-card:hover {
-            border-color: rgba(255, 119, 0, 0.8); /* 邊框變橘色 */
-            box-shadow: 0 0 25px rgba(255, 119, 0, 0.4); /* 橘色光暈 */
-            transform: translateY(-5px); /* 微幅上浮 */
-        }
-
-        /* 數字本身的橘色霓虹燈質感 */
-        .tech-number {
-            color: #FF7700;
-            text-shadow: 0 0 10px rgba(255, 119, 0, 0.7),
-                         0 0 20px rgba(255, 119, 0, 0.5);
-        }
-  /* 產品卡片容器：必須設定 overflow: hidden 才能剪掉飛出去的光 */
-        .product-card {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
-
-        /* 製作那道「光」 */
-        .product-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%; /* 初始位置在卡片左邊外面 */
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(
-                to right, 
-                rgba(255, 255, 255, 0) 0%, 
-                rgba(255, 255, 255, 0.3) 50%, 
-                rgba(255, 255, 255, 0) 100%
-            );
-            transform: skewX(-25deg); /* 斜角光影 */
-            transition: none;
-        }
-
-        /* 滑鼠移上去時，光影掃過 */
-        .product-card:hover::after {
-            left: 150%; /* 掃到右邊外面 */
-            transition: all 0.7s ease; /* 掃動的速度 */
-        }
-
-        /* 懸浮時卡片微幅放大並發光 */
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-        /* 漂浮微粒動畫容器：鎖定在背景，不干擾文字 */
-        .particles-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none; /* 讓滑鼠點擊可以直接穿透微粒，不影響按鈕點擊 */
-            z-index: 1; /* 確保它在背景之上，但在文字與卡片之下 */
-        }
-
-        /* 微粒基本樣式 */
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.3); /* 白色半透明 */
-            border-radius: 50%;
-            filter: blur(1px); /* 微幅模糊，增加深邃感 */
-            animation: float-around 20s infinite ease-in-out;
-        }
-
-        /* 微粒漂浮動畫軌跡 */
-        @keyframes float-around {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0.2;
-            }
-            33% {
-                transform: translate(30px, -50px) scale(1.2);
-                opacity: 0.5;
-            }
-            66% {
-                transform: translate(-20px, -100px) scale(0.8);
-                opacity: 0.3;
-            }
-        }
-        
-        /* 1. 設定導覽列文字原本的狀態 */
-nav a {
-    color: #356994 !important; /* 確保顏色是妳要的藍色 */
-    display: inline-block;    /* 必須設定為 inline-block 才能產生位移效果 */
-    transition: all 0.3s ease; /* 設定動畫速度，0.3秒最滑順 */
-}
-
-/* 2. 設定鼠標移過去 (hover) 時的跳動與變色 */
-nav a:hover {
-    color: #FF7700 !important;   /* 變橘色 */
-    transform: translateY(-4px); /* 向上跳動 4 像素 */
-}
+        .parallax-dna { background-image: url('https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80'); height: 480px; background-attachment: fixed; background-position: center; background-size: cover; position: relative; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .tech-counter-card { position: relative; background: rgba(0, 10, 20, 0.6); border: 1px solid rgba(0, 255, 255, 0.2); overflow: hidden; transition: all 0.3s ease; box-shadow: 0 0 15px rgba(0, 255, 255, 0.1); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%); }
+        .tech-number { color: #FF7700; text-shadow: 0 0 10px rgba(255, 119, 0, 0.7); }
+        .product-card { position: relative; overflow: hidden; transition: all 0.4s ease; }
+        .particles-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: 1; }
+        .particle { position: absolute; background: rgba(255, 255, 255, 0.3); border-radius: 50%; animation: float-around 20s infinite ease-in-out; }
+        @keyframes float-around { 0%, 100% { transform: translate(0, 0); opacity: 0.2; } 50% { transform: translate(20px, -40px); opacity: 0.5; } }
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 left-0 w-full z-[9999] transition-all duration-300" style="background-color: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05);">
-    
-    <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-        
-        <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">JD</div>
-            <span class="text-xl font-bold tracking-tight" style="color: #356994;">JHEN DA <span class="text-orange-500">BIOTECH</span></span>
+    <nav>
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">JD</div>
+                <span class="text-xl font-bold tracking-tight" style="color: #356994;">JHEN DA <span class="text-orange-500">BIOTECH</span></span>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="nav-link">關於我們</a>
+                <a href="#services" class="nav-link">服務項目</a>
+                <a href="#products" class="nav-link">產品介紹</a>
+                <a href="#contact" class="nav-link">聯絡我們</a>
+                <button onclick="toggleLanguage()" id="langBtn" class="border border-orange-500 text-orange-500 px-4 py-1 rounded-md text-sm font-bold hover:bg-orange-500 hover:text-white transition-all">
+                    EN / 中文
+                </button>
+            </div>
         </div>
-
-        <div class="hidden md:flex items-center space-x-8">
-            <a href="#about" class="text-[#356994] hover:text-orange-500 font-medium transition-colors">關於我們</a>
-            <a href="#services" class="text-[#356994] hover:text-orange-500 font-medium transition-colors">服務項目</a>
-            <a href="#products" class="text-[#356994] hover:text-orange-500 font-medium transition-colors">產品介紹</a>
-            <a href="#join" class="text-[#356994] hover:text-orange-500 font-medium transition-colors">加入我們</a>
-            <a href="#contact" class="text-[#356994] hover:text-orange-500 font-medium transition-colors">聯絡我們</a>
-            
-            <button onclick="toggleLanguage()" class="border border-orange-500 text-orange-500 px-4 py-1 rounded-md text-sm font-bold hover:bg-orange-500 hover:text-white transition-all">
-    EN / 中文
-</button>
-        </div>
-    </div>
-</nav>
+    </nav>
 
     <header class="hero-bg">
         <h1 class="text-5xl md:text-7xl font-bold">
@@ -259,262 +88,133 @@ nav a:hover {
         </h1>
     </header>
 
-  <section id="about" class="pt-20 pb-24 reveal relative overflow-hidden" style="background-color: #356994; color: white;">
-    
-    <div class="particles-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;">
-        <div class="particle" style="position: absolute; background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 8px; height: 8px; top: 15%; left: 10%; animation: float-around 20s infinite ease-in-out;"></div>
-        <div class="particle" style="position: absolute; background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 12px; height: 12px; top: 45%; left: 85%; animation: float-around 20s infinite ease-in-out; animation-delay: 2s;"></div>
-        <div class="particle" style="position: absolute; background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 6px; height: 6px; top: 75%; left: 25%; animation: float-around 20s infinite ease-in-out; animation-delay: 4s;"></div>
-        <div class="particle" style="position: absolute; background: rgba(255, 255, 255, 0.1); border-radius: 50%; width: 20px; height: 20px; top: 30%; left: 50%; animation: float-around 25s infinite ease-in-out; filter: blur(2px);"></div>
-    </div>
-
-    <div class="max-w-7xl mx-auto px-6 text-center relative" style="z-index: 10;">
-        
-        <div class="mb-8">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-2" data-zh="關於我們" data-en="About Us">關於我們</h2>
-            <div class="w-24 h-1 bg-orange-500 mx-auto rounded-full"></div>
+    <section id="about" class="pt-24 pb-24 reveal relative overflow-hidden" style="background-color: #356994; color: white;">
+        <div class="particles-container">
+            <div class="particle" style="width: 8px; height: 8px; top: 15%; left: 10%;"></div>
+            <div class="particle" style="width: 12px; height: 12px; top: 45%; left: 85%; animation-delay: 2s;"></div>
         </div>
-
-        <div class="max-w-4xl mx-auto mb-12">
-            <h3 class="text-2xl md:text-3xl font-bold text-orange-400 mb-6" data-zh="專業醫療通路的深耕者，守護全台健康的橋樑">
-                專業醫療通路的深耕者，守護全台健康的橋樑
-            </h3>
-            <p class="text-lg text-blue-50 leading-relaxed opacity-95">
-                我們是以關懷人類健康為宗旨的專業醫療生技公司。憑藉著對醫療科技的敏銳度，我們引進國內外先進醫療器材與特殊營養品，致力於為臨床醫師提供更多元的治療選擇，並以病患為優先出發點打造全方位的健康照護體系。
-            </p>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-8 mb-12 text-left">
-            <div class="bg-white/10 p-10 rounded-3xl border border-white/20 backdrop-blur-md shadow-xl">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl mr-4">🏢</span>
-                    <h4 class="text-3xl font-bold text-orange-400">醫院端</h4>
-                </div>
-                <p class="text-lg text-white/90">展現卓越的產品專業力，全台已成功進用 21 家醫學中心、15 家區域醫院及 10 家地區醫院。</p>
+        <div class="max-w-7xl mx-auto px-6 text-center relative" style="z-index: 10;">
+            <div class="mb-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2" data-zh="關於我們" data-en="About Us">關於我們</h2>
+                <div class="w-24 h-1 bg-orange-500 mx-auto rounded-full"></div>
             </div>
-            <div class="bg-white/10 p-10 rounded-3xl border border-white/20 backdrop-blur-md shadow-xl">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl mr-4">🏥</span>
-                    <h4 class="text-3xl font-bold text-orange-400">診所端</h4>
-                </div>
-                <p class="text-lg text-white/90">深入基層醫療體系，南部已有近 50 家診所穩定使用本公司產品，是醫療團隊值得信賴的合作夥伴。</p>
+            <div class="max-w-4xl mx-auto mb-12">
+                <h3 class="text-2xl md:text-3xl font-bold text-orange-400 mb-6" data-zh="專業醫療通路的深耕者" data-en="Deep Cultivator of Medical Channels">專業醫療通路的深耕者，守護全台健康的橋樑</h3>
+                <p class="text-lg text-blue-50">我們是以關懷人類健康為宗旨的專業醫療生技公司，引進國內外先進醫療器材與特殊營養品。</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="tech-counter-card p-6 text-center"><div class="text-5xl font-bold tech-number"><span id="count1">0</span></div><div class="text-[10px] text-cyan-200">醫學中心</div></div>
+                <div class="tech-counter-card p-6 text-center"><div class="text-5xl font-bold tech-number"><span id="count2">0</span></div><div class="text-[10px] text-cyan-200">區域醫院</div></div>
+                <div class="tech-counter-card p-6 text-center"><div class="text-5xl font-bold tech-number"><span id="count3">0</span></div><div class="text-[10px] text-cyan-200">地區醫院</div></div>
+                <div class="tech-counter-card p-6 text-center"><div class="text-5xl font-bold tech-number"><span id="count4">0</span>+</div><div class="text-[10px] text-cyan-200">合作診所</div></div>
             </div>
         </div>
+    </section>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="tech-counter-card p-6 text-center">
-                <div class="text-5xl font-bold tech-number mb-2"><span id="count1">0</span></div>
-                <div class="text-[10px] uppercase tracking-[0.2em] text-cyan-200 font-medium">醫學中心</div>
-            </div>
-            <div class="tech-counter-card p-6 text-center">
-                <div class="text-5xl font-bold tech-number mb-2"><span id="count2">0</span></div>
-                <div class="text-[10px] uppercase tracking-[0.2em] text-cyan-200 font-medium">區域醫院</div>
-            </div>
-            <div class="tech-counter-card p-6 text-center">
-                <div class="text-5xl font-bold tech-number mb-2"><span id="count3">0</span></div>
-                <div class="text-[10px] uppercase tracking-[0.2em] text-cyan-200 font-medium">地區醫院</div>
-            </div>
-            <div class="tech-counter-card p-6 text-center">
-                <div class="text-5xl font-bold tech-number mb-2"><span id="count4">0</span><span class="text-3xl">+</span></div>
-                <div class="text-[10px] uppercase tracking-[0.2em] text-cyan-200 font-medium">合作診所</div>
-            </div>
-        </div>
-    </div>
-</section>
-  
     <div class="parallax-dna"></div>
+
     <section id="services" class="py-24 bg-white reveal">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-16" style="color: var(--target-blue);" data-zh="服務項目" data-en="Our Services">服務項目</h2>
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-16" style="color: var(--target-blue);" data-zh="服務項目" data-en="Our Services">服務項目</h2>
             <div class="grid md:grid-cols-3 gap-10">
-                <div class="p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="text-[#FF7700] text-4xl mb-6">🩺</div>
-                    <h3 class="text-2xl font-bold mb-4" style="color: var(--target-blue);" data-zh="先進醫療器材代理" data-en="Medical Device Agency">先進醫療器材代理</h3>
-                    <p class="text-gray-600 leading-relaxed text-lg" data-zh="嚴選國內外高階微創醫療設備與器材，供應全台各級醫療院所。" data-en="Selection of high-end minimally invasive medical equipment, supplying medical institutions across Taiwan.">嚴選國內外高階微創醫療設備與器材，供應全台各級醫療院所。</p>
+                <div class="p-10 rounded-3xl border shadow-sm hover:shadow-xl transition-all">
+                    <div class="text-4xl mb-6">🩺</div>
+                    <h3 class="text-2xl font-bold mb-4" data-zh="先進醫療器材代理" data-en="Device Agency">先進醫療器材代理</h3>
+                    <p class="text-gray-600">嚴選國內外高階微創醫療設備與器材。</p>
                 </div>
-                <div class="p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="text-[#FF7700] text-4xl mb-6">💊</div>
-                    <h3 class="text-2xl font-bold mb-4" style="color: var(--target-blue);" data-zh="特殊營養品銷售" data-en="Specialized Nutrition">特殊營養品銷售</h3>
-                    <p class="text-gray-600 leading-relaxed text-lg" data-zh="提供具備科學實證之專業營養補充方案。" data-en="Providing professional nutritional supplement solutions backed by scientific evidence.">提供具備科學實證之專業營養補充方案。</p>
                 </div>
-                <div class="p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="text-[#FF7700] text-4xl mb-6">💙</div>
-                    <h3 class="text-2xl font-bold mb-4" style="color: var(--target-blue);" data-zh="全方位病患追蹤與健康照護" data-en="Patient Care & Tracking">全方位病患追蹤與健康照護</h3>
-                    <p class="text-gray-600 leading-relaxed text-lg" data-zh="結合產品優勢，提供後續的健康管理服務，確保照護品質。" data-en="Combining product advantages to provide follow-up health management services and ensure care quality.">結合產品優勢，提供後續的健康管理服務，確保照護品質。</p>
-                </div>
-            </div>
         </div>
     </section>
 
     <section id="products" class="py-24 max-w-7xl mx-auto reveal px-6">
         <h2 class="text-3xl font-bold text-center mb-16" style="color: var(--target-blue);" data-zh="核心產品介紹" data-en="Core Products">核心產品介紹</h2>
         <div class="grid md:grid-cols-2 gap-12 text-center">
-            <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white">
-                <img src="8.jpg" class="w-full h-auto max-h-[500px] object-contain mx-auto">
-                <p class="p-4 font-bold text-slate-700">CID CRE8 EVO</p>
-            </div>
-            <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white">
-                <img src="bone.jpg" class="w-full h-auto max-h-[500px] object-contain mx-auto">
-                <p class="p-4 font-bold text-slate-700">FlexiOss®</p>
-            </div>
+            <div class="product-card shadow-xl rounded-3xl bg-white"><img src="8.jpg" class="mx-auto p-4"><p class="p-4 font-bold">CID CRE8 EVO</p></div>
+            <div class="product-card shadow-xl rounded-3xl bg-white"><img src="bone.jpg" class="mx-auto p-4"><p class="p-4 font-bold">FlexiOss®</p></div>
         </div>
     </section>
 
-<section id="contact" class="py-24 bg-gray-50 border-t border-gray-200">
+    <section id="contact" class="py-24 bg-gray-50 border-t">
         <div class="max-w-4xl mx-auto px-6 text-center">
             <h2 class="text-4xl font-bold mb-10" style="color: var(--target-blue);" data-zh="聯絡我們" data-en="Contact Us">聯絡我們</h2>
-            <div class="bg-white p-12 rounded-3xl shadow-lg border-2" style="border-color: var(--hermes-orange);">
-                <p class="text-gray-500 mb-4 tracking-widest text-sm font-bold" data-zh="電子郵件" data-en="EMAIL ADDRESS">電子郵件 / EMAIL</p>
-                <a href="mailto:jdbiotech@jen-da.com.tw" class="text-2xl md:text-3xl font-bold break-all hover:text-orange-600 transition" style="color: var(--target-blue);">
-                    jdbiotech@jen-da.com.tw
-                </a>
-                <div class="mt-8">
-                    <a href="mailto:jdbiotech@jen-da.com.tw" class="inline-block px-10 py-4 rounded-full font-bold text-white shadow-md hover:bg-orange-600 transition" style="background-color: var(--hermes-orange);" data-zh="立即來信" data-en="Email Us Now">立即來信</a>
-                </div>
+            <div class="bg-white p-12 rounded-3xl shadow-lg border-2 border-orange-500">
+                <p class="text-sm font-bold text-gray-400">EMAIL ADDRESS</p>
+                <a href="mailto:jdbiotech@jen-da.com.tw" class="text-2xl font-bold block mt-2" style="color: var(--target-blue);">jdbiotech@jen-da.com.tw</a>
             </div>
         </div>
     </section>
 
-    <footer class="py-12" style="background-color: var(--target-blue); color: white; text-align: center;">
-        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mx-auto mb-4" style="color: var(--target-blue); font-weight: bold;">JD</div>
-        <p>© 2026 JHEN DA BIOTECH CO.,LTD. <span data-zh="禎達行銷顧問有限公司" data-en="Jhen Da Biotech">禎達行銷顧問有限公司</span></p>
+    <footer class="py-12 bg-[#356994] text-white text-center">
+        <p>© 2026 JHEN DA BIOTECH. 禎達行銷顧問有限公司</p>
     </footer>
-<button id="topBtn" onclick="scrollToTop()" class="fixed bottom-8 right-8 z-50 bg-[#FF7700] text-white w-16 h-16 rounded-full shadow-2xl flex flex-col items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-orange-600 hover:scale-110 group">
-        <span class="text-3xl font-bold mb-1 transition-transform group-hover:-translate-y-1">↑</span>
-        <span class="text-[11px] font-bold tracking-tight">TOP</span>
-    </button>
-   <script>
-        // 1. 切換語言邏輯
-        <script>
-    let currentLang = 'zh';
 
-    function toggleLanguage() {
-        currentLang = currentLang === 'zh' ? 'en' : 'zh';
-        
-        // 找出所有帶有語言標記的標籤
-        document.querySelectorAll('[data-zh]').forEach(el => {
-            // 根據目前的語言切換顯示內容
-            el.textContent = el.getAttribute(`data-${currentLang}`);
+    <button id="topBtn" onclick="scrollToTop()" class="fixed bottom-8 right-8 z-50 bg-[#FF7700] text-white w-16 h-16 rounded-full shadow-2xl opacity-0 invisible transition-all flex items-center justify-center font-bold">TOP</button>
+
+    <script>
+        let currentLang = 'zh';
+
+        // 1. 中英文切換
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            document.querySelectorAll('[data-zh]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+            document.getElementById('langBtn').textContent = (currentLang === 'zh') ? 'EN / 中文' : 'ZH / English';
+        }
+
+        // 2. 修復導覽列點擊跳轉 (重要！)
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                }
+            });
         });
-    }
 
-        // 2. 監聽捲動事件，顯示或隱藏 TOP 按鈕
-        const topBtn = document.getElementById("topBtn");
-// 監聽捲動事件 (合併導覽列與 TOP 按鈕邏輯)
+        // 3. 捲動控制 (TOP按鈕 + 動畫)
         window.onscroll = function() {
-            // 1. 導覽列縮放與毛玻璃特效
-            const nav = document.querySelector(".glass-nav");
-            if (window.scrollY > 50) {
-                nav.classList.add("scrolled");
-            } else {
-                nav.classList.remove("scrolled");
-            }
-
-            // 2. 監聽捲動距離，顯示或隱藏 TOP 按鈕
             const topBtn = document.getElementById("topBtn");
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            if (document.documentElement.scrollTop > 300) {
                 topBtn.classList.remove("opacity-0", "invisible");
                 topBtn.classList.add("opacity-100", "visible");
             } else {
                 topBtn.classList.remove("opacity-100", "visible");
                 topBtn.classList.add("opacity-0", "invisible");
             }
-            
-            // 3. 觸發滾動出現動畫 (剛才教的 reveal)
             reveal();
+            checkCounter();
         };
 
-        // 4. 執行回到頂端
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth' // 平滑捲動
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        function reveal() {
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
             });
         }
-   // 滾動偵測動畫邏輯
-        function reveal() {
-    var reveals = document.querySelectorAll(".reveal");
-    for (var i = 0; i < reveals.length; i++) {
-        var windowHeight = window.innerHeight;
-        var elementTop = reveals[i].getBoundingClientRect().top;
-        var elementVisible = 100; 
-        
-        if (elementTop < windowHeight - elementVisible) {
-            reveals[i].classList.add("active");
-        } else {
-            // 滑回頂端時重置，讓動畫可以重複觸發
-            reveals[i].classList.remove("active");
+
+        // 4. 數字跳動
+        function checkCounter() {
+            const about = document.getElementById('about');
+            if (about && about.getBoundingClientRect().top < window.innerHeight - 100) {
+                if (document.getElementById('count1').innerText === "0") {
+                    countUp("count1", 21); countUp("count2", 15);
+                    countUp("count3", 10); countUp("count4", 50);
+                }
+            }
         }
-    }
-}
-        window.addEventListener("scroll", reveal);
-        // 網頁載入時先執行一次，避免首屏內容消失
+        function countUp(id, end) {
+            let obj = document.getElementById(id);
+            let current = 0;
+            let timer = setInterval(() => {
+                current += Math.ceil(end/20);
+                if (current >= end) { obj.innerText = end; clearInterval(timer); }
+                else { obj.innerText = current; }
+            }, 50);
+        }
         reveal();
-    // --- 數字跳動功能引擎 (滑入即跳動，滑出即歸零版) ---
-(function() {
-    function startCounting(id, start, end, duration) {
-        const obj = document.getElementById(id);
-        if (!obj) return;
-        let startTimestamp = null;
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            obj.innerHTML = Math.floor(progress * (end - start) + start);
-            if (progress < 1) {
-                window.requestAnimationFrame(step);
-            }
-        };
-        window.requestAnimationFrame(step);
-    }
-
-    window.addEventListener('scroll', function() {
-        const aboutSec = document.getElementById('about');
-        if (!aboutSec) return;
-
-        const rect = aboutSec.getBoundingClientRect();
-        
-        // 判斷條件：當區塊進入視窗內
-        if (rect.top < window.innerHeight - 150 && rect.bottom > 0) {
-            // 如果數字目前是 0，代表需要啟動跳動
-            if (document.getElementById('count1').innerHTML === "0") {
-                startCounting("count1", 0, 21, 2000);
-                startCounting("count2", 0, 15, 2000);
-                startCounting("count3", 0, 10, 2000);
-                startCounting("count4", 0, 50, 2500);
-            }
-        } else {
-            // 當區塊滑出視窗外（不管是往上滑還是往下滑）
-            // 將數字重設為 0，這樣下次滑進來才會觸發 if 條件重新跳動
-            document.getElementById('count1').innerHTML = "0";
-            document.getElementById('count2').innerHTML = "0";
-            document.getElementById('count3').innerHTML = "0";
-            document.getElementById('count4').innerHTML = "0";
-        }
-    });
-})();
-
-    // 確保只宣告一次語言狀態
-    if (typeof currentLang === 'undefined') {
-        var currentLang = 'zh'; 
-    }
-
-    function toggleLanguage() {
-        // 1. 切換語言狀態
-        currentLang = (currentLang === 'zh') ? 'en' : 'zh';
-        console.log("目前的語言切換為: " + currentLang); // 測試用，可以在瀏覽器按 F12 檢查
-
-        // 2. 找出網頁中所有設定了 data-zh 的標籤並切換文字
-        const elements = document.querySelectorAll('[data-zh]');
-        elements.forEach(el => {
-            const newText = el.getAttribute(`data-${currentLang}`);
-            if (newText) {
-                el.textContent = newText;
-            }
-        });
-
-        // 3. 處理手機版或電腦版按鈕文字同步 (選做)
-        // 如果妳有點擊後想變換按鈕文字，可以加在這裡
-    }
-   </script>
+    </script>
 </body>
 </html>
