@@ -245,9 +245,9 @@ nav a:hover {
             <a href="#join" class="text-[#356994] hover:text-orange-500 font-medium transition-colors">加入我們</a>
             <a href="#contact" class="text-[#356994] hover:text-orange-500 font-medium transition-colors">聯絡我們</a>
             
-            <button class="border border-orange-500 text-orange-500 px-4 py-1 rounded-md text-sm font-bold hover:bg-orange-500 hover:text-white transition-all">
-                EN / 中文
-            </button>
+            <button onclick="toggleLanguage()" class="border border-orange-500 text-orange-500 px-4 py-1 rounded-md text-sm font-bold hover:bg-orange-500 hover:text-white transition-all">
+    EN / 中文
+</button>
         </div>
     </div>
 </nav>
@@ -385,13 +385,18 @@ nav a:hover {
     </button>
    <script>
         // 1. 切換語言邏輯
-        let isZh = true;
-        function toggleLang() {
-            isZh = !isZh;
-            document.querySelectorAll('[data-zh]').forEach(el => {
-                el.innerText = isZh ? el.getAttribute('data-zh') : el.getAttribute('data-en');
-            });
-        }
+        <script>
+    let currentLang = 'zh';
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'zh' ? 'en' : 'zh';
+        
+        // 找出所有帶有語言標記的標籤
+        document.querySelectorAll('[data-zh]').forEach(el => {
+            // 根據目前的語言切換顯示內容
+            el.textContent = el.getAttribute(`data-${currentLang}`);
+        });
+    }
 
         // 2. 監聽捲動事件，顯示或隱藏 TOP 按鈕
         const topBtn = document.getElementById("topBtn");
