@@ -41,18 +41,18 @@
     align-items: center !important;
 }
 
-/* 2. 選單文字：維持藍色、加平滑動畫 */
-.glass-nav a {
-    color: var(--target-blue) !important;
-    text-decoration: none !important;
+/* 1. 確保所有導覽列內的連結都是藍色，且有動畫過渡 */
+.glass-nav a, nav a {
+    color: #356994 !important; /* 妳指定的藍色 */
+    display: inline-block !important; /* 必須是這個，字才會跳動 */
     transition: all 0.3s ease !important;
-    display: inline-block;
+    text-decoration: none !important;
 }
 
-/* 3. 鼠標移上去：變橘色 + 向上跳動 (科技感動態) */
-.glass-nav a:hover {
-    color: #FF7700 !important;
-    transform: translateY(-3px) !important;
+/* 2. 鼠標移過去時：變橘色 + 向上彈跳 */
+.glass-nav a:hover, nav a:hover {
+    color: #FF7700 !important;   /* 變橘色 */
+    transform: translateY(-5px) !important; /* 向上跳動 5 像素 */
 }
 .glass-nav a {
             color: var(--target-blue); 
