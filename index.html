@@ -18,20 +18,22 @@
         } }
 
        /* 強化版懸浮導覽列 */
-        .glass-nav { 
-    /* 背景改為 70% 透明度的白色，營造透明感 */
-    background: rgba(255, 255, 255, 0.7) !important; 
-    
-    /* 核心科技感：毛玻璃模糊效果 */
-    backdrop-filter: blur(10px) !important; 
-    -webkit-backdrop-filter: blur(10px); 
-
-    /* 保持原本的定位與層級，不影響字體位置 */
-    position: fixed; 
+       .glass-nav { 
+    /* 1. 確保置頂：固定在視窗最上方 */
+    position: fixed !important; 
+    top: 0 !important; 
+    left: 0;
     width: 100%; 
-    z-index: 100; 
+    z-index: 9999; /* 確保它在所有內容的最前面 */
+
+    /* 2. 背景微透明科技感：70% 白色 + 強效毛玻璃 */
+    background: rgba(255, 255, 255, 0.7) !important; 
+    backdrop-filter: blur(12px) !important; 
+    -webkit-backdrop-filter: blur(12px); 
+
+    /* 3. 維持原本的過渡動畫與底邊線 */
     transition: all 0.4s ease;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 .glass-nav a {
             color: var(--target-blue); 
