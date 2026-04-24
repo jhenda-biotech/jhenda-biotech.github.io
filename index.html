@@ -492,6 +492,29 @@ nav a:hover {
         }
     });
 })();
+
+    // 確保只宣告一次語言狀態
+    if (typeof currentLang === 'undefined') {
+        var currentLang = 'zh'; 
+    }
+
+    function toggleLanguage() {
+        // 1. 切換語言狀態
+        currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+        console.log("目前的語言切換為: " + currentLang); // 測試用，可以在瀏覽器按 F12 檢查
+
+        // 2. 找出網頁中所有設定了 data-zh 的標籤並切換文字
+        const elements = document.querySelectorAll('[data-zh]');
+        elements.forEach(el => {
+            const newText = el.getAttribute(`data-${currentLang}`);
+            if (newText) {
+                el.textContent = newText;
+            }
+        });
+
+        // 3. 處理手機版或電腦版按鈕文字同步 (選做)
+        // 如果妳有點擊後想變換按鈕文字，可以加在這裡
+    }
    </script>
 </body>
 </html>
