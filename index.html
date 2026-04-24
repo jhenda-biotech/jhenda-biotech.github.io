@@ -216,29 +216,28 @@
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full z-[9999] bg-white/70 backdrop-blur-md shadow-sm transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-[#FF7700] rounded-full flex items-center justify-center text-white font-bold">JD</div>
-                <div class="font-bold text-xl" style="color: var(--target-blue);">JHEN DA <span style="color: var(--hermes-orange);">BIOTECH</span></div>
-            </div>
-           <div class="flex items-center space-x-8 font-bold" style="color: var(--target-blue);">
-    <a href="#about" data-zh="關於我們" data-en="About Us">關於我們</a>
-    <a href="#services" data-zh="服務項目" data-en="Services">服務項目</a>
-    <a href="#products" data-zh="產品介紹" data-en="Products">產品介紹</a>
+    <nav class="fixed top-0 left-0 w-full z-[9999] transition-all duration-300" style="background-color: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05);">
     
-    <a href="https://www.104.com.tw/company/1a2x6bmpxv?jobsource=google" 
-       target="_blank" 
-       class="hover:text-orange-600 transition"
-       data-zh="加入我們" 
-       data-en="Join Us">加入我們</a>
-    
-    <a href="#contact" data-zh="聯絡我們" data-en="Contact Us">聯絡我們</a>
-    
-    <button onclick="toggleLang()" class="border border-orange-500 text-[#FF7700] px-3 py-1 rounded text-xs hover:bg-[#FF7700] hover:text-white transition">EN / 中文</button>
-</div>
+    <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+        
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">JD</div>
+            <span class="text-xl font-bold tracking-tight" style="color: #356994;">JHEN DA <span class="text-orange-500">BIOTECH</span></span>
         </div>
-    </nav>
+
+        <div class="hidden md:flex items-center space-x-8">
+            <a href="#about" class="text-slate-700 hover:text-orange-500 font-medium transition-colors">關於我們</a>
+            <a href="#services" class="text-slate-700 hover:text-orange-500 font-medium transition-colors">服務項目</a>
+            <a href="#products" class="text-slate-700 hover:text-orange-500 font-medium transition-colors">產品介紹</a>
+            <a href="#join" class="text-slate-700 hover:text-orange-500 font-medium transition-colors">加入我們</a>
+            <a href="#contact" class="text-slate-700 hover:text-orange-500 font-medium transition-colors">聯絡我們</a>
+            
+            <button class="border border-orange-500 text-orange-500 px-4 py-1 rounded-md text-sm font-bold hover:bg-orange-500 hover:text-white transition-all">
+                EN / 中文
+            </button>
+        </div>
+    </div>
+</nav>
 
     <header class="hero-bg">
         <h1 class="text-5xl md:text-7xl font-bold">
