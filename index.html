@@ -19,14 +19,19 @@
 
        /* 強化版懸浮導覽列 */
         .glass-nav { 
-    background: rgba(255, 255, 255, 0.5); 
-    /* 初始也加一點點模糊，質感會更猛 */
-    backdrop-filter: blur(4px); 
+    /* 背景改為 70% 透明度的白色，營造透明感 */
+    background: rgba(255, 255, 255, 0.7) !important; 
+    
+    /* 核心科技感：毛玻璃模糊效果 */
+    backdrop-filter: blur(10px) !important; 
+    -webkit-backdrop-filter: blur(10px); 
+
+    /* 保持原本的定位與層級，不影響字體位置 */
     position: fixed; 
     width: 100%; 
     z-index: 100; 
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 .glass-nav a {
             color: var(--target-blue); 
