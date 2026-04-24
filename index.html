@@ -212,6 +212,19 @@
                 opacity: 0.3;
             }
         }
+        
+        /* 1. 設定導覽列文字原本的狀態 */
+nav a {
+    color: #356994 !important; /* 確保顏色是妳要的藍色 */
+    display: inline-block;    /* 必須設定為 inline-block 才能產生位移效果 */
+    transition: all 0.3s ease; /* 設定動畫速度，0.3秒最滑順 */
+}
+
+/* 2. 設定鼠標移過去 (hover) 時的跳動與變色 */
+nav a:hover {
+    color: #FF7700 !important;   /* 變橘色 */
+    transform: translateY(-4px); /* 向上跳動 4 像素 */
+}
     </style>
 </head>
 <body>
