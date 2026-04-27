@@ -512,6 +512,29 @@
         }
     });
 })();
+       // 1. 監聽捲動事件，顯示或隱藏 TOP 按鈕
+window.addEventListener('scroll', function() {
+    const topBtn = document.getElementById("topBtn");
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        topBtn.classList.remove("opacity-0", "invisible");
+        topBtn.classList.add("opacity-100", "visible");
+    } else {
+        topBtn.classList.remove("opacity-100", "visible");
+        topBtn.classList.add("opacity-0", "invisible");
+    }
+});
+
+// 2. 執行平滑回到頂端
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // 平滑捲動效果
+    });
+}
    </script>
+    <button id="topBtn" onclick="scrollToTop()" class="fixed bottom-8 right-8 z-[9999] bg-[#FF7700] text-white w-14 h-14 rounded-full shadow-2xl flex flex-col items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-orange-600 hover:scale-110 group">
+    <span class="text-2xl font-bold mb-0 transition-transform group-hover:-translate-y-1">↑</span>
+    <span class="text-[10px] font-bold tracking-tight">TOP</span>
+</button>
 </body>
 </html>
