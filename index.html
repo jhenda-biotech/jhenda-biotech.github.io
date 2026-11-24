@@ -243,6 +243,44 @@
            /* 最新消息：隱藏橫向捲軸 */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            /* 產品展示台 */
+        .showcase-section { background: linear-gradient(135deg, #356994 0%, #0f2a44 100%); }
+        .showcase-tab {
+            position: relative; flex-shrink: 0; min-width: 190px; text-align: left;
+            padding: 16px 20px; border-radius: 16px; overflow: hidden; cursor: pointer;
+            color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12); transition: all 0.3s ease;
+        }
+        .showcase-tab:hover { background: rgba(255,255,255,0.12); color: #fff; }
+        .showcase-tab.active {
+            color: #fff; background: rgba(255,255,255,0.16);
+            border-color: rgba(255,119,0,0.8); box-shadow: 0 0 24px rgba(255,119,0,0.25);
+        }
+        .showcase-tab .num { display: block; font-size: 12px; letter-spacing: 0.2em; color: #FF9A3C; }
+        .showcase-tab .bar {
+            position: absolute; left: 0; bottom: 0; height: 3px; width: 0;
+            background: linear-gradient(90deg, #F5B820, #F08A24, #E8573A);
+        }
+        .showcase-tab.active .bar { animation: showcaseFill 6s linear forwards; }
+        .showcase:hover .showcase-tab .bar { animation-play-state: paused; }
+        @keyframes showcaseFill { from { width: 0; } to { width: 100%; } }
+
+        .showcase-stage { display: grid; }
+        .showcase-panel {
+            grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateX(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s;
+        }
+        .showcase-panel.active { opacity: 1; visibility: visible; transform: none; }
+
+        .showcase-img {
+            background: #fff; border-radius: 24px; padding: 16px; height: 320px;
+            display: flex; align-items: center; justify-content: center; cursor: zoom-in;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.2);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .showcase-img:hover { transform: scale(1.02); box-shadow: 0 25px 70px rgba(255,119,0,0.3), 0 0 0 1px rgba(255,255,255,0.3); }
+        .showcase-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        @media (min-width: 768px) { .showcase-img { height: 440px; } }
     </style>
 </head>
 <body>
@@ -426,29 +464,99 @@
         </div>
     </section>
 
-       <section id="products" class="py-24 max-w-7xl mx-auto reveal px-6">
-        <h2 class="text-3xl font-bold text-center mb-16" style="color: var(--target-blue);" data-zh="核心產品介紹" data-en="Core Products">核心產品介紹</h2>
-        <p class="text-center text-gray-500 text-sm -mt-10 mb-12" data-zh="點擊圖片可放大檢視" data-en="Click an image to enlarge">點擊圖片可放大檢視</p>
-        <div class="grid md:grid-cols-2 gap-12 text-center">
-             <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white" onclick="openProduct(this)">
-                <img src="LithiX.jpg" alt="LithiX" class="w-full h-auto max-h-[500px] object-contain mx-auto">
-                <p class="p-4 font-bold text-slate-700">LithiX</p>
-            </div>
-            <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white" onclick="openProduct(this)">
-                <img src="bone.jpg" alt="FlexiOss" class="w-full h-auto max-h-[500px] object-contain mx-auto">
-                <p class="p-4 font-bold text-slate-700">FlexiOss®</p>
-            </div>
-            <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white" onclick="openProduct(this)">
-                <img src="Elutax3.jpg" alt="ELUTAX 3" class="w-full h-auto max-h-[500px] object-contain mx-auto">
-                <p class="p-4 font-bold text-slate-700">ELUTAX "3"</p>
-            </div>
-             <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white" onclick="openProduct(this)">
-                <img src="8.jpg" alt="CID CRE8 EVO" class="w-full h-auto max-h-[500px] object-contain mx-auto">
-                <p class="p-4 font-bold text-slate-700">CID CRE8 EVO</p>
+          <section id="products" class="showcase-section py-24 reveal">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-4 text-white" data-zh="核心產品介紹" data-en="Core Products">核心產品介紹</h2>
+            <div class="w-24 h-1 mx-auto rounded-full mb-4" style="background: linear-gradient(90deg, #F5B820, #E8573A);"></div>
+            <p class="text-center text-white/60 text-sm mb-12" data-zh="點擊圖片可放大檢視" data-en="Click an image to enlarge">點擊圖片可放大檢視</p>
+
+            <div class="showcase grid lg:grid-cols-12 gap-8 items-center">
+
+                <div class="showcase-tabs relative lg:col-span-3 flex lg:flex-col gap-3 overflow-x-auto no-scrollbar pb-2">
+                    <button class="showcase-tab active" onclick="showcaseGo(0)">
+                        <span class="num">01</span>
+                        <span class="block font-bold text-lg">CID CRE8 EVO</span>
+                        <span class="block text-xs opacity-70" data-zh="冠狀動脈支架" data-en="Coronary Stent">冠狀動脈支架</span>
+                        <span class="bar"></span>
+                    </button>
+                    <button class="showcase-tab" onclick="showcaseGo(1)">
+                        <span class="num">02</span>
+                        <span class="block font-bold text-lg">FlexiOss®</span>
+                        <span class="block text-xs opacity-70" data-zh="骨材" data-en="Bone Graft">骨材</span>
+                        <span class="bar"></span>
+                    </button>
+                    <button class="showcase-tab" onclick="showcaseGo(2)">
+                        <span class="num">03</span>
+                        <span class="block font-bold text-lg">ELUTAX "3"</span>
+                        <span class="block text-xs opacity-70" data-zh="藥物塗層球囊" data-en="Drug-Coated Balloon">藥物塗層球囊</span>
+                        <span class="bar"></span>
+                    </button>
+                    <button class="showcase-tab" onclick="showcaseGo(3)">
+                        <span class="num">04</span>
+                        <span class="block font-bold text-lg">LithiX</span>
+                        <span class="block text-xs opacity-70" data-zh="血管內碎石球囊" data-en="Intravascular Lithotripsy Balloon">血管內碎石球囊</span>
+                        <span class="bar"></span>
+                    </button>
+                </div>
+
+                <div class="showcase-stage lg:col-span-9">
+
+                    <div class="showcase-panel active grid md:grid-cols-5 gap-8 items-center">
+                        <div class="showcase-img md:col-span-3" onclick="openProduct(this)">
+                            <img src="8.jpg" alt="CID CRE8 EVO">
+                            <p class="sr-only">CID CRE8 EVO</p>
+                        </div>
+                        <div class="md:col-span-2 text-left">
+                            <span class="inline-block mb-4 px-3 py-1 rounded-full text-xs tracking-widest text-orange-300 bg-white/10 border border-white/20" data-zh="冠狀動脈支架" data-en="Coronary Stent">冠狀動脈支架</span>
+                            <h3 class="text-3xl font-bold text-white mb-4">CID CRE8 EVO</h3>
+                            <p class="text-white/80 leading-relaxed mb-6" data-zh="義大利 CID 原廠的冠狀動脈支架，為心導管介入治療提供臨床選擇。" data-en="Coronary stent from CID (Italy), offering a clinical option for catheter-based cardiac intervention.">義大利 CID 原廠的冠狀動脈支架，為心導管介入治療提供臨床選擇。</p>
+                            <a href="mailto:jdbiotech@jen-da.com.tw?subject=Product%20Inquiry%20-%20CID%20CRE8%20EVO" class="inline-block px-8 py-3 rounded-full font-bold text-white shadow-lg hover:scale-105 transition" style="background: linear-gradient(90deg, #F5B820, #F08A24, #E8573A);" data-zh="索取產品資料" data-en="Request Product Info">索取產品資料</a>
+                        </div>
+                    </div>
+
+                    <div class="showcase-panel grid md:grid-cols-5 gap-8 items-center">
+                        <div class="showcase-img md:col-span-3" onclick="openProduct(this)">
+                            <img src="bone.jpg" alt="FlexiOss">
+                            <p class="sr-only">FlexiOss®</p>
+                        </div>
+                        <div class="md:col-span-2 text-left">
+                            <span class="inline-block mb-4 px-3 py-1 rounded-full text-xs tracking-widest text-orange-300 bg-white/10 border border-white/20" data-zh="骨材" data-en="Bone Graft">骨材</span>
+                            <h3 class="text-3xl font-bold text-white mb-4">FlexiOss®</h3>
+                            <p class="text-white/80 leading-relaxed mb-6" data-zh="波蘭原廠骨材產品，為骨科及牙科手術提供臨床選擇。" data-en="Bone graft product from Poland, offering a clinical option for orthopedic and dental procedures.">波蘭原廠骨材產品，為骨科及牙科手術提供臨床選擇。</p>
+                            <a href="mailto:jdbiotech@jen-da.com.tw?subject=Product%20Inquiry%20-%20FlexiOss" class="inline-block px-8 py-3 rounded-full font-bold text-white shadow-lg hover:scale-105 transition" style="background: linear-gradient(90deg, #F5B820, #F08A24, #E8573A);" data-zh="索取產品資料" data-en="Request Product Info">索取產品資料</a>
+                        </div>
+                    </div>
+
+                    <div class="showcase-panel grid md:grid-cols-5 gap-8 items-center">
+                        <div class="showcase-img md:col-span-3" onclick="openProduct(this)">
+                            <img src="Elutax3.jpg" alt="ELUTAX 3">
+                            <p class="sr-only">ELUTAX "3"</p>
+                        </div>
+                        <div class="md:col-span-2 text-left">
+                            <span class="inline-block mb-4 px-3 py-1 rounded-full text-xs tracking-widest text-orange-300 bg-white/10 border border-white/20" data-zh="藥物塗層球囊" data-en="Drug-Coated Balloon">藥物塗層球囊</span>
+                            <h3 class="text-3xl font-bold text-white mb-4">ELUTAX "3"</h3>
+                            <p class="text-white/80 leading-relaxed mb-6" data-zh="AR Baltic Medical 原廠的藥物塗層球囊導管，為血管介入治療提供臨床選擇。" data-en="Drug-coated balloon catheter from AR Baltic Medical, offering a clinical option for vascular intervention.">AR Baltic Medical 原廠的藥物塗層球囊導管，為血管介入治療提供臨床選擇。</p>
+                            <a href="mailto:jdbiotech@jen-da.com.tw?subject=Product%20Inquiry%20-%20ELUTAX%203" class="inline-block px-8 py-3 rounded-full font-bold text-white shadow-lg hover:scale-105 transition" style="background: linear-gradient(90deg, #F5B820, #F08A24, #E8573A);" data-zh="索取產品資料" data-en="Request Product Info">索取產品資料</a>
+                        </div>
+                    </div>
+
+                    <div class="showcase-panel grid md:grid-cols-5 gap-8 items-center">
+                        <div class="showcase-img md:col-span-3" onclick="openProduct(this)">
+                            <img src="LithiX.jpg" alt="LithiX">
+                            <p class="sr-only">LithiX</p>
+                        </div>
+                        <div class="md:col-span-2 text-left">
+                            <span class="inline-block mb-4 px-3 py-1 rounded-full text-xs tracking-widest text-orange-300 bg-white/10 border border-white/20" data-zh="血管內碎石球囊" data-en="Intravascular Lithotripsy Balloon">血管內碎石球囊</span>
+                            <h3 class="text-3xl font-bold text-white mb-4">LithiX</h3>
+                            <p class="text-white/80 leading-relaxed mb-6" data-zh="Elixir Medical 原廠的 Hertz Contact IVL 球囊導管，為鈣化血管病灶的處置提供臨床選擇。" data-en="Hertz Contact IVL balloon catheter from Elixir Medical, offering a clinical option for treating calcified vascular lesions.">Elixir Medical 原廠的 Hertz Contact IVL 球囊導管，為鈣化血管病灶的處置提供臨床選擇。</p>
+                            <a href="mailto:jdbiotech@jen-da.com.tw?subject=Product%20Inquiry%20-%20LithiX" class="inline-block px-8 py-3 rounded-full font-bold text-white shadow-lg hover:scale-105 transition" style="background: linear-gradient(90deg, #F5B820, #F08A24, #E8573A);" data-zh="索取產品資料" data-en="Request Product Info">索取產品資料</a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </section>
-
 <section id="contact" class="py-24 bg-gray-50 border-t border-gray-200">
         <div class="max-w-4xl mx-auto px-6 text-center">
             <h2 class="text-4xl font-bold mb-10" style="color: var(--target-blue);" data-zh="聯絡我們" data-en="Contact Us">聯絡我們</h2>
@@ -497,6 +605,22 @@
         <p id="lightboxCap" class="mt-5 text-white font-bold text-lg tracking-wide"></p>
     </div>
    <script>
+               // 產品展示台：切換與自動輪播
+        function showcaseGo(i) {
+            const tabs = document.querySelectorAll('.showcase-tab');
+            document.querySelectorAll('.showcase-panel').forEach((p, n) => p.classList.toggle('active', n === i));
+            tabs.forEach((t, n) => t.classList.toggle('active', n === i));
+            const list = document.querySelector('.showcase-tabs');
+            const t = tabs[i];
+            list.scrollTo({ left: t.offsetLeft - (list.clientWidth - t.clientWidth) / 2, behavior: 'smooth' });
+        }
+        document.querySelectorAll('.showcase-tab .bar').forEach(bar => {
+            bar.addEventListener('animationend', () => {
+                const tabs = [...document.querySelectorAll('.showcase-tab')];
+                const cur = tabs.findIndex(t => t.classList.contains('active'));
+                showcaseGo((cur + 1) % tabs.length);
+            });
+        });
                // 產品圖：點擊放大
         function openProduct(card) {
             const img = card.querySelector('img');
