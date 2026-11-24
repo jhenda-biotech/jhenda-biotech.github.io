@@ -426,16 +426,25 @@
         </div>
     </section>
 
-    <section id="products" class="py-24 max-w-7xl mx-auto reveal px-6">
+       <section id="products" class="py-24 max-w-7xl mx-auto reveal px-6">
         <h2 class="text-3xl font-bold text-center mb-16" style="color: var(--target-blue);" data-zh="核心產品介紹" data-en="Core Products">核心產品介紹</h2>
+        <p class="text-center text-gray-500 text-sm -mt-10 mb-12" data-zh="點擊圖片可放大檢視" data-en="Click an image to enlarge">點擊圖片可放大檢視</p>
         <div class="grid md:grid-cols-2 gap-12 text-center">
-            <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white">
-                <img src="8.jpg" class="w-full h-auto max-h-[500px] object-contain mx-auto">
+            <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white" onclick="openProduct(this)">
+                <img src="8.jpg" alt="CID CRE8 EVO" class="w-full h-auto max-h-[500px] object-contain mx-auto">
                 <p class="p-4 font-bold text-slate-700">CID CRE8 EVO</p>
             </div>
-            <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white">
-                <img src="bone.jpg" class="w-full h-auto max-h-[500px] object-contain mx-auto">
+            <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white" onclick="openProduct(this)">
+                <img src="bone.jpg" alt="FlexiOss" class="w-full h-auto max-h-[500px] object-contain mx-auto">
                 <p class="p-4 font-bold text-slate-700">FlexiOss®</p>
+            </div>
+            <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white" onclick="openProduct(this)">
+                <img src="Elutax3.jpg" alt="ELUTAX 3" class="w-full h-auto max-h-[500px] object-contain mx-auto">
+                <p class="p-4 font-bold text-slate-700">ELUTAX "3"</p>
+            </div>
+            <div class="product-card cursor-pointer shadow-xl rounded-3xl overflow-hidden border-t-8 border-[#FF7700] bg-white" onclick="openProduct(this)">
+                <img src="LithiX.jpg" alt="LithiX" class="w-full h-auto max-h-[500px] object-contain mx-auto">
+                <p class="p-4 font-bold text-slate-700">LithiX</p>
             </div>
         </div>
     </section>
@@ -482,7 +491,33 @@
         <span class="text-3xl font-bold mb-1 transition-transform group-hover:-translate-y-1">↑</span>
         <span class="text-[11px] font-bold tracking-tight">TOP</span>
     </button>
+        <div id="productLightbox" onclick="closeProduct()" class="hidden fixed inset-0 z-[100000] bg-black/85 items-center justify-center flex-col p-4 cursor-zoom-out" style="backdrop-filter: blur(6px);">
+        <button onclick="closeProduct()" aria-label="關閉" class="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/15 text-white text-2xl hover:bg-[#FF7700] transition">✕</button>
+        <img id="lightboxImg" src="" alt="" onclick="event.stopPropagation()" class="max-h-[82vh] max-w-full object-contain rounded-2xl shadow-2xl cursor-default">
+        <p id="lightboxCap" class="mt-5 text-white font-bold text-lg tracking-wide"></p>
+    </div>
    <script>
+               // 產品圖：點擊放大
+        function openProduct(card) {
+            const img = card.querySelector('img');
+            const cap = card.querySelector('p').innerText;
+            const box = document.getElementById('productLightbox');
+            document.getElementById('lightboxImg').src = img.src;
+            document.getElementById('lightboxImg').alt = cap;
+            document.getElementById('lightboxCap').innerText = cap;
+            box.classList.remove('hidden');
+            box.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeProduct() {
+            const box = document.getElementById('productLightbox');
+            box.classList.add('hidden');
+            box.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeProduct();
+        });
         // 最新消息：左右捲動
         function scrollNews(dir) {
             const track = document.getElementById('newsTrack');
