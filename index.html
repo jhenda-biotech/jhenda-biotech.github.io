@@ -240,6 +240,9 @@
                 opacity: 0.3;
             }
         }
+           /* 最新消息：隱藏橫向捲軸 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body>
@@ -363,7 +366,38 @@
     </div>
 </div>
 </section>
-  
+      <section id="news" class="py-24 bg-gray-50 reveal scroll-mt-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-4" style="color: var(--target-blue);" data-zh="最新消息／活動" data-en="News & Events">最新消息／活動</h2>
+            <div class="w-24 h-1 bg-orange-500 mx-auto rounded-full mb-12"></div>
+
+            <div class="relative">
+                <button onclick="scrollNews(-1)" aria-label="上一張"
+                    class="absolute left-0 top-1/3 -translate-x-1/2 z-10 w-12 h-12 rounded-full bg-[#FF7700] text-white text-2xl font-bold shadow-lg hover:bg-orange-600 hover:scale-110 transition">‹</button>
+                <button onclick="scrollNews(1)" aria-label="下一張"
+                    class="absolute right-0 top-1/3 translate-x-1/2 z-10 w-12 h-12 rounded-full bg-[#FF7700] text-white text-2xl font-bold shadow-lg hover:bg-orange-600 hover:scale-110 transition">›</button>
+
+                <div id="newsTrack" class="no-scrollbar flex gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4">
+
+                    <div class="news-card snap-center shrink-0 w-[85%] sm:w-[60%] lg:w-[42%] bg-white rounded-3xl shadow-xl overflow-hidden border-t-8 border-[#FF7700] hover:-translate-y-2 transition-all duration-300">
+                        <img src="news1.jpg" alt="活動照片 1" class="w-full aspect-[4/3] object-cover">
+                        <p class="p-4 font-bold text-slate-700 text-center" data-zh="請改成第一則活動說明" data-en="Event 1 caption">請改成第一則活動說明</p>
+                    </div>
+
+                    <div class="news-card snap-center shrink-0 w-[85%] sm:w-[60%] lg:w-[42%] bg-white rounded-3xl shadow-xl overflow-hidden border-t-8 border-[#FF7700] hover:-translate-y-2 transition-all duration-300">
+                        <img src="news2.jpg" alt="活動照片 2" class="w-full aspect-[4/3] object-cover">
+                        <p class="p-4 font-bold text-slate-700 text-center" data-zh="請改成第二則活動說明" data-en="Event 2 caption">請改成第二則活動說明</p>
+                    </div>
+
+                    <div class="news-card snap-center shrink-0 w-[85%] sm:w-[60%] lg:w-[42%] bg-white rounded-3xl shadow-xl overflow-hidden border-t-8 border-[#FF7700] hover:-translate-y-2 transition-all duration-300">
+                        <img src="news3.jpg" alt="活動照片 3" class="w-full aspect-[4/3] object-cover">
+                        <p class="p-4 font-bold text-slate-700 text-center" data-zh="請改成第三則活動說明" data-en="Event 3 caption">請改成第三則活動說明</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
     <div class="parallax-dna"></div>
     <section id="services" class="py-24 bg-white reveal">
         <div class="max-w-7xl mx-auto px-6">
@@ -426,6 +460,13 @@
         <span class="text-[11px] font-bold tracking-tight">TOP</span>
     </button>
    <script>
+        // 最新消息：左右捲動
+        function scrollNews(dir) {
+            const track = document.getElementById('newsTrack');
+            const card = track.querySelector('.news-card');
+            track.scrollBy({ left: dir * (card.offsetWidth + 32), behavior: 'smooth' });
+        }
+       
         // 1. 切換語言邏輯
         let isZh = true;
         function toggleLang() {
