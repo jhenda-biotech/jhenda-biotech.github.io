@@ -243,22 +243,6 @@
            /* 最新消息：隱藏橫向捲軸 */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-           /* 卡片頂端：改成 LOGO 漸層色條（取代原本的純橘色邊框） */
-        .product-card, .news-card {
-            border-top-width: 0 !important;
-            padding-top: 8px;
-            position: relative;
-        }
-        .product-card::before, .news-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: linear-gradient(90deg, #F5B820 0%, #F08A24 45%, #E8573A 100%);
-            z-index: 2;
-        }
     </style>
 </head>
 <body>
