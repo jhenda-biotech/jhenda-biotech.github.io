@@ -281,6 +281,8 @@
         .showcase-img:hover { transform: scale(1.02); box-shadow: 0 25px 70px rgba(255,119,0,0.3), 0 0 0 1px rgba(255,255,255,0.3); }
         .showcase-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
         @media (min-width: 768px) { .showcase-img { height: 440px; } }
+        /* 暫時隱藏「索取產品資料」按鈕（之後要恢復，刪掉這段即可） */
+        a[data-zh="索取產品資料"] { display: none !important; }  
     </style>
 </head>
 <body>
@@ -475,7 +477,7 @@
                 <div class="showcase-tabs relative lg:col-span-3 flex lg:flex-col gap-3 overflow-x-auto no-scrollbar pb-2">
                     <button class="showcase-tab active" onclick="showcaseGo(0)">
                         <span class="num">01</span>
-                        <span class="block font-bold text-lg">CID CRE8 EVO</span>
+                        <span class="block font-bold text-lg">CRE8 EVO</span>
                         <span class="block text-xs opacity-70" data-zh="冠狀動脈支架" data-en="Coronary Stent">冠狀動脈支架</span>
                         <span class="bar"></span>
                     </button>
@@ -503,27 +505,27 @@
 
                     <div class="showcase-panel active grid md:grid-cols-5 gap-8 items-center">
                         <div class="showcase-img md:col-span-3" onclick="openProduct(this)">
-                            <img src="8.jpg" alt="CID CRE8 EVO">
-                            <p class="sr-only">CID CRE8 EVO</p>
+                            <img src="8.jpg" alt="CRE8 EVO">
+                            <p class="sr-only">CRE8 EVO</p>
                         </div>
                         <div class="md:col-span-2 text-left">
                             <span class="inline-block mb-4 px-3 py-1 rounded-full text-xs tracking-widest text-orange-300 bg-white/10 border border-white/20" data-zh="冠狀動脈支架" data-en="Coronary Stent">冠狀動脈支架</span>
-                            <h3 class="text-3xl font-bold text-white mb-4">CID CRE8 EVO</h3>
+                            <h3 class="text-3xl font-bold text-white mb-4">CRE8 EVO</h3>
                             <p class="text-white/80 leading-relaxed mb-6" data-zh="義大利 CID 原廠的冠狀動脈支架，為心導管介入治療提供臨床選擇。" data-en="Coronary stent from CID (Italy), offering a clinical option for catheter-based cardiac intervention.">義大利 CID 原廠的冠狀動脈支架，為心導管介入治療提供臨床選擇。</p>
                             <a href="mailto:jdbiotech@jen-da.com.tw?subject=Product%20Inquiry%20-%20CID%20CRE8%20EVO" class="inline-block px-8 py-3 rounded-full font-bold text-white shadow-lg hover:scale-105 transition" style="background: linear-gradient(90deg, #F5B820, #F08A24, #E8573A);" data-zh="索取產品資料" data-en="Request Product Info">索取產品資料</a>
                         </div>
                     </div>
 
-                    <div class="showcase-panel grid md:grid-cols-5 gap-8 items-center">
+                                       <div class="showcase-panel grid md:grid-cols-5 gap-8 items-center">
                         <div class="showcase-img md:col-span-3" onclick="openProduct(this)">
                             <img src="bone.jpg" alt="FlexiOss">
-                            <p class="sr-only">FlexiOss®</p>
+                            <p class="sr-only">FlexiOss® &amp; FlexiOss®Dent</p>
                         </div>
                         <div class="md:col-span-2 text-left">
-                            <span class="inline-block mb-4 px-3 py-1 rounded-full text-xs tracking-widest text-orange-300 bg-white/10 border border-white/20" data-zh="骨材" data-en="Bone Graft">骨材</span>
-                            <h3 class="text-3xl font-bold text-white mb-4">FlexiOss®</h3>
-                            <p class="text-white/80 leading-relaxed mb-6" data-zh="波蘭原廠骨材產品，為骨科及牙科手術提供臨床選擇。" data-en="Bone graft product from Poland, offering a clinical option for orthopedic and dental procedures.">波蘭原廠骨材產品，為骨科及牙科手術提供臨床選擇。</p>
-                            <a href="mailto:jdbiotech@jen-da.com.tw?subject=Product%20Inquiry%20-%20FlexiOss" class="inline-block px-8 py-3 rounded-full font-bold text-white shadow-lg hover:scale-105 transition" style="background: linear-gradient(90deg, #F5B820, #F08A24, #E8573A);" data-zh="索取產品資料" data-en="Request Product Info">索取產品資料</a>
+                            <span class="inline-block mb-4 px-3 py-1 rounded-full text-xs tracking-widest text-orange-300 bg-white/10 border border-white/20" data-zh="骨材／牙材" data-en="Bone Graft / Dental Graft">骨材／牙材</span>
+                            <h3 class="text-3xl font-bold text-white mb-4">FlexiOss® &amp; FlexiOss®Dent</h3>
+                            <p class="text-white/80 leading-relaxed mb-6" data-zh="波蘭原廠骨材與牙材產品，為骨科及牙科手術提供臨床選擇。" data-en="Bone graft and dental graft products from Poland, offering clinical options for orthopedic and dental procedures.">波蘭原廠骨材與牙材產品，為骨科及牙科手術提供臨床選擇。</p>
+                            <a href="mailto:jdbiotech@jen-da.com.tw?subject=Product%20Inquiry%20-%20FlexiOss%20%26%20FlexiOss%20Dent" class="inline-block px-8 py-3 rounded-full font-bold text-white shadow-lg hover:scale-105 transition" style="background: linear-gradient(90deg, #F5B820, #F08A24, #E8573A);" data-zh="索取產品資料" data-en="Request Product Info">索取產品資料</a>
                         </div>
                     </div>
 
